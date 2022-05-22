@@ -1,4 +1,4 @@
-# eatingblock
+# FoodAllergy
 
 A new Flutter project.
 
