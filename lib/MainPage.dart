@@ -1,8 +1,8 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
-
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'FileSetup.dart';
+import 'FoodList.dart';
 import 'food.dart';
 
 class MainPage extends StatefulWidget {
@@ -13,27 +13,34 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  // String? nameSearch = "";
-  // state? stateColor = null;
-  // void runme([String tex = "", Color stateC = Colors.white]) {
-  //   setState(() {
-  //     if (tex == '')
-  //       nameSearch = null;
-  //     else
-  //       nameSearch = tex;
-  //     if (stateC != Colors.white) {
-  //       switch (stateC) {
-  //         case Colors.green:
-  //           stateColor = state.green;
-  //       }
-  //     }
-  //   });
-  // }
+  setNameFilter(String fil) {
+    setState(() {
+      FileSetup.setNameFilter(fil);
+    });
+  }
 
-  // void setNameFilter(String fil) {
-  //   FileSetup.setNameFilter(fil);
-  // }
+  setTypeFilter(Type fil) {
+    setState(() {
+      dropDownType = fil;
+      FileSetup.setTypeFilter(fil);
+    });
+  }
 
+  setColorFilter(Color? value) {
+    setState(() {
+      dropDownIcon = value!;
+      if (value == Colors.white)
+        FileSetup.setStateFilter(null);
+      else if (value == Colors.red)
+        FileSetup.setStateFilter(state.red);
+      else if (value == Colors.green)
+        FileSetup.setStateFilter(state.green);
+      else if (value == Colors.yellow) FileSetup.setStateFilter(state.yellow);
+    });
+  }
+
+  Color dropDownIcon = Colors.white;
+  Type dropDownType = Type.All;
   @override
   Widget build(BuildContext context) {
     FileSetup.writeDefault();
@@ -41,12 +48,13 @@ class _MainPageState extends State<MainPage> {
     return Column(children: [
       Container(
           child: TextField(
-            onChanged: (text) => {FileSetup.setNameFilter(text)},
+            onChanged: (text) => setNameFilter(text),
           ),
           padding: const EdgeInsets.all(8)),
       Container(
           child: Row(children: [
             DropdownButton<Color>(
+              value: dropDownIcon,
               items: <Color>[
                 Colors.white,
                 Colors.red,
@@ -55,13 +63,22 @@ class _MainPageState extends State<MainPage> {
               ].map<DropdownMenuItem<Color>>((Color value) {
                 return DropdownMenuItem<Color>(
                     value: value,
-                    child: Icon(Icons.brightness_1, color: value, size: 20));
+                    alignment: Alignment.center,
+                    child: Icon(Icons.brightness_1, color: value));
               }).toList(),
-              onChanged: (value) => setColorFilter(value),
+              onChanged: (value) => {setColorFilter(value)},
             ),
+            DropdownButton<Type>(
+              value: dropDownType,
+              items: Type.values.map<DropdownMenuItem<Type>>((Type value) {
+                return DropdownMenuItem<Type>(
+                    value: value,
+                    child: Text(EnumToString.convertToString(value)));
+              }).toList(),
+              icon: const Icon(Icons.arrow_downward),
+              onChanged: (value) => setTypeFilter(value!),
+            )
           ]),
-          //controller: searchController,
-
           padding: const EdgeInsets.all(8)),
       Expanded(
           child: FutureBuilder<List<Food>>(
@@ -73,67 +90,5 @@ class _MainPageState extends State<MainPage> {
                   return const CircularProgressIndicator();
               }))
     ]);
-  }
-}
-
-setColorFilter(Color? value) {
-  String white = Colors.white.toString();
-  String red = Colors.red.toString();
-  String green = Colors.green.toString();
-  String yellow = Colors.yellow.toString();
-  if (value == Colors.white)
-    FileSetup.setStateFilter(null);
-  else if (value == Colors.red)
-    FileSetup.setStateFilter(state.red);
-  else if (value == Colors.green)
-    FileSetup.setStateFilter(state.green);
-  else if (value == Colors.yellow) FileSetup.setStateFilter(state.yellow);
-}
-
-class FoodList extends StatefulWidget {
-  final List<Food>? li;
-  const FoodList(this.li, {Key? key}) : super(key: key);
-
-  @override
-  State<FoodList> createState() => _FoodListState();
-}
-
-class _FoodListState extends State<FoodList> {
-  Widget _buildrow(Food f) {
-    Color r;
-    switch (f.getState) {
-      case state.green:
-        r = Colors.green;
-        break;
-      case state.red:
-        r = Colors.red;
-        break;
-      case state.yellow:
-        r = Colors.yellow;
-        break;
-    }
-    Widget color = Container(
-      color: r,
-      width: 20,
-    );
-    return ListTile(
-      leading: color,
-      title: Text(f.getName), //, color]),
-      subtitle: Text(EnumToString.convertToString(f.getType)),
-      trailing: const IconButton(
-        icon: Icon(Icons.settings),
-        onPressed: null,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-        padding: const EdgeInsets.all(8),
-        itemCount: widget.li!.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _buildrow(widget.li![index]);
-        });
   }
 }

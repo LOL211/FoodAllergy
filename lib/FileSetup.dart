@@ -72,12 +72,13 @@ class FileSetup {
     }
 
     if (namefil != '') {
-      foodlist.removeWhere((element) => !element.getName.contains(namefil));
+      foodlist.removeWhere((element) =>
+          !element.getName.toLowerCase().contains(namefil.toLowerCase()));
     }
     if (statefil != null) {
       foodlist.removeWhere((element) => element.getState != statefil);
     }
-    if (typefil != null) {
+    if (typefil != Type.All && typefil != null) {
       foodlist.removeWhere((element) => element.getType != typefil);
     }
 

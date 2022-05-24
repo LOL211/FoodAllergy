@@ -1,4 +1,11 @@
-enum Type { dairy, seafood, fruit }
+// ignore_for_file: constant_identifier_names
+
+enum Type {
+  All,
+  dairy,
+  seafood,
+  fruit,
+}
 enum state { red, green, yellow }
 
 class Food {
