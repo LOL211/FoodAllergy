@@ -3,6 +3,7 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 
+import 'FileSetup.dart';
 import 'food.dart';
 
 class FoodList extends StatefulWidget {
@@ -35,10 +36,17 @@ class _FoodListState extends State<FoodList> {
       leading: color,
       title: Text(f.getName), //, color]),
       subtitle: Text(EnumToString.convertToString(f.getType)),
-      trailing: IconButton(
-        icon: const Icon(Icons.settings),
-        onPressed: () => print('my id is ' + f.getID.toString()),
-      ),
+      trailing: Expanded(
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+        IconButton(
+            icon: const Icon(Icons.restore_from_trash),
+            onPressed: () => setState(() {
+                  List<Food> temp = widget.li!;
+                  temp.removeWhere((element) => element.getID == f.getID);
+                  FileSetup.writeToFile(temp);
+                })),
+        const IconButton(onPressed: null, icon: Icon(Icons.settings))
+      ])),
     );
   }
 
