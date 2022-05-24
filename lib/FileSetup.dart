@@ -84,4 +84,12 @@ class FileSetup {
 
     return foodlist;
   }
+
+  static void writeToFile(List<Food> lis) async {
+    final file = await _localFile;
+    file.writeAsStringSync('');
+    for (Food ele in lis) {
+      file.writeAsStringSync(ele.StringVar + '\n', mode: FileMode.append);
+    }
+  }
 }
