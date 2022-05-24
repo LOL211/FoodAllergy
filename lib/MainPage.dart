@@ -43,43 +43,62 @@ class _MainPageState extends State<MainPage> {
   Type dropDownType = Type.All;
   @override
   Widget build(BuildContext context) {
-    FileSetup.writeDefault();
+    //FileSetup.writeDefault();
 
     return Column(children: [
       Container(
           child: TextField(
+            decoration: const InputDecoration(
+                hintText: 'Search', icon: Icon(Icons.search)),
             onChanged: (text) => setNameFilter(text),
           ),
           padding: const EdgeInsets.all(8)),
       Container(
-          child: Row(children: [
-            DropdownButton<Color>(
-              value: dropDownIcon,
-              items: <Color>[
-                Colors.white,
-                Colors.red,
-                Colors.yellow,
-                Colors.green
-              ].map<DropdownMenuItem<Color>>((Color value) {
-                return DropdownMenuItem<Color>(
-                    value: value,
-                    alignment: Alignment.center,
-                    child: Icon(Icons.brightness_1, color: value));
-              }).toList(),
-              onChanged: (value) => {setColorFilter(value)},
-            ),
-            DropdownButton<Type>(
-              value: dropDownType,
-              items: Type.values.map<DropdownMenuItem<Type>>((Type value) {
-                return DropdownMenuItem<Type>(
-                    value: value,
-                    child: Text(EnumToString.convertToString(value)));
-              }).toList(),
-              icon: const Icon(Icons.arrow_downward),
-              onChanged: (value) => setTypeFilter(value!),
-            )
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+            const Text('Color'),
+            Container(
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.black)),
+                padding: const EdgeInsets.all(5),
+                child: DropdownButton<Color>(
+                  isDense: true,
+                  value: dropDownIcon,
+                  items: <Color>[
+                    Colors.white,
+                    Colors.red,
+                    Colors.yellow,
+                    Colors.green
+                  ].map<DropdownMenuItem<Color>>((Color value) {
+                    return DropdownMenuItem<Color>(
+                        value: value,
+                        alignment: Alignment.center,
+                        child: Icon(Icons.brightness_1, color: value));
+                  }).toList(),
+                  onChanged: (value) => {setColorFilter(value)},
+                )),
+            Container(
+                child: const Text(
+                  'Type',
+                ),
+                padding: const EdgeInsets.all(8)),
+            Container(
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.black)),
+                padding: const EdgeInsets.all(5),
+                child: DropdownButton<Type>(
+                  isDense: true,
+                  value: dropDownType,
+                  items: Type.values.map<DropdownMenuItem<Type>>((Type value) {
+                    return DropdownMenuItem<Type>(
+                        value: value,
+                        child: Text(EnumToString.convertToString(value)));
+                  }).toList(),
+                  icon: const Icon(Icons.arrow_downward),
+                  onChanged: (value) => setTypeFilter(value!),
+                ))
           ]),
-          padding: const EdgeInsets.all(8)),
+          padding: const EdgeInsets.all(10)),
       Expanded(
           child: FutureBuilder<List<Food>>(
               future: FileSetup.readFile(),
