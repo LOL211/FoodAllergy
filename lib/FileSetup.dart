@@ -36,12 +36,14 @@ class FileSetup {
     lis.add(Food('apple', state.yellow, Type.fruit));
     lis.add(Food('apple', state.yellow, Type.fruit));
     file.writeAsStringSync('');
+
     for (Food ele in lis) {
       file.writeAsStringSync(ele.StringVar + '\n', mode: FileMode.append);
     }
   }
 
-  static Future<List<Food>> readFile() async {
+  static Future<List<Food>> readFile(
+      [String? name, Type? types, state? colors]) async {
     final file = await _localFile;
 
     List<String> lis = file.readAsLinesSync();
@@ -52,6 +54,16 @@ class FileSetup {
           spl[0],
           state.values.firstWhere((e) => e.toString() == spl[1]),
           Type.values.firstWhere((e) => e.toString() == spl[2])));
+    }
+
+    if (name != null && name != '') {
+      foodlist.removeWhere((element) => !element.getName.contains(name));
+    }
+    if (colors != null) {
+      foodlist.removeWhere((element) => element.getState != colors);
+    }
+    if (types != null) {
+      foodlist.removeWhere((element) => element.getType != types);
     }
 
     return foodlist;
