@@ -13,32 +13,31 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  String test = "";
-  void runme() {
+  String? nameSearch = "";
+  void runme([String tex = ""]) {
     setState(() {
-      if (test == 'a')
-        test = '';
+      if (tex == '')
+        nameSearch = null;
       else
-        test = 'a';
-      print('test is ' + test);
+        nameSearch = tex;
     });
   }
 
+  final searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     FileSetup.writeDefault();
 
     return Column(children: [
-      // Container(child: const TextField(), padding: const EdgeInsets.all(8)),
       Container(
-          child: TextButton(
-            onPressed: runme,
-            child: Text(test),
+          child: TextField(
+            //controller: searchController,
+            onChanged: (text) => {runme(text)},
           ),
           padding: const EdgeInsets.all(8)),
       Expanded(
           child: FutureBuilder<List<Food>>(
-              future: FileSetup.readFile(test),
+              future: FileSetup.readFile(nameSearch),
               builder: (context, AsyncSnapshot<List<Food>> curState) {
                 if (curState.hasData)
                   return FoodList(curState.data);
@@ -50,20 +49,14 @@ class _MainPageState extends State<MainPage> {
 }
 
 class FoodList extends StatefulWidget {
-  List<Food>? li;
-  FoodList(this.li, {Key? key}) : super(key: key);
+  final List<Food>? li;
+  const FoodList(this.li, {Key? key}) : super(key: key);
 
   @override
   State<FoodList> createState() => _FoodListState();
 }
 
 class _FoodListState extends State<FoodList> {
-  void update(List<Food> f) {
-    setState(() {
-      widget.li = f;
-    });
-  }
-
   Widget _buildrow(Food f) {
     Color r;
     switch (f.getState) {
