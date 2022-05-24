@@ -13,17 +13,27 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  String? nameSearch = "";
-  void runme([String tex = ""]) {
-    setState(() {
-      if (tex == '')
-        nameSearch = null;
-      else
-        nameSearch = tex;
-    });
-  }
+  // String? nameSearch = "";
+  // state? stateColor = null;
+  // void runme([String tex = "", Color stateC = Colors.white]) {
+  //   setState(() {
+  //     if (tex == '')
+  //       nameSearch = null;
+  //     else
+  //       nameSearch = tex;
+  //     if (stateC != Colors.white) {
+  //       switch (stateC) {
+  //         case Colors.green:
+  //           stateColor = state.green;
+  //       }
+  //     }
+  //   });
+  // }
 
-  final searchController = TextEditingController();
+  // void setNameFilter(String fil) {
+  //   FileSetup.setNameFilter(fil);
+  // }
+
   @override
   Widget build(BuildContext context) {
     FileSetup.writeDefault();
@@ -31,13 +41,31 @@ class _MainPageState extends State<MainPage> {
     return Column(children: [
       Container(
           child: TextField(
-            //controller: searchController,
-            onChanged: (text) => {runme(text)},
+            onChanged: (text) => {FileSetup.setNameFilter(text)},
           ),
+          padding: const EdgeInsets.all(8)),
+      Container(
+          child: Row(children: [
+            DropdownButton<Color>(
+              items: <Color>[
+                Colors.white,
+                Colors.red,
+                Colors.yellow,
+                Colors.green
+              ].map<DropdownMenuItem<Color>>((Color value) {
+                return DropdownMenuItem<Color>(
+                    value: value,
+                    child: Icon(Icons.brightness_1, color: value, size: 20));
+              }).toList(),
+              onChanged: (value) => setColorFilter(value),
+            ),
+          ]),
+          //controller: searchController,
+
           padding: const EdgeInsets.all(8)),
       Expanded(
           child: FutureBuilder<List<Food>>(
-              future: FileSetup.readFile(nameSearch),
+              future: FileSetup.readFile(),
               builder: (context, AsyncSnapshot<List<Food>> curState) {
                 if (curState.hasData)
                   return FoodList(curState.data);
@@ -46,6 +74,20 @@ class _MainPageState extends State<MainPage> {
               }))
     ]);
   }
+}
+
+setColorFilter(Color? value) {
+  String white = Colors.white.toString();
+  String red = Colors.red.toString();
+  String green = Colors.green.toString();
+  String yellow = Colors.yellow.toString();
+  if (value == Colors.white)
+    FileSetup.setStateFilter(null);
+  else if (value == Colors.red)
+    FileSetup.setStateFilter(state.red);
+  else if (value == Colors.green)
+    FileSetup.setStateFilter(state.green);
+  else if (value == Colors.yellow) FileSetup.setStateFilter(state.yellow);
 }
 
 class FoodList extends StatefulWidget {

@@ -42,8 +42,23 @@ class FileSetup {
     }
   }
 
-  static Future<List<Food>> readFile(
-      [String? name, Type? types, state? colors]) async {
+  static state? statefil;
+  static String namefil = '';
+  static Type? typefil;
+
+  static setStateFilter(state? fil) {
+    statefil = fil;
+  }
+
+  static setNameFilter(String fil) {
+    namefil = fil;
+  }
+
+  static setTypeFilter(Type? fil) {
+    typefil = fil;
+  }
+
+  static Future<List<Food>> readFile() async {
     final file = await _localFile;
 
     List<String> lis = file.readAsLinesSync();
@@ -56,14 +71,14 @@ class FileSetup {
           Type.values.firstWhere((e) => e.toString() == spl[2])));
     }
 
-    if (name != null && name != '') {
-      foodlist.removeWhere((element) => !element.getName.contains(name));
+    if (namefil != '') {
+      foodlist.removeWhere((element) => !element.getName.contains(namefil));
     }
-    if (colors != null) {
-      foodlist.removeWhere((element) => element.getState != colors);
+    if (statefil != null) {
+      foodlist.removeWhere((element) => element.getState != statefil);
     }
-    if (types != null) {
-      foodlist.removeWhere((element) => element.getType != types);
+    if (typefil != null) {
+      foodlist.removeWhere((element) => element.getType != typefil);
     }
 
     return foodlist;
