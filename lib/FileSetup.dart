@@ -20,21 +20,21 @@ class FileSetup {
 
     // Write the file
     List<Food> lis = [];
-    lis.add(Food('berry', state.red, Type.dairy));
-    lis.add(Food('fish', state.green, Type.seafood));
-    lis.add(Food('apple', state.yellow, Type.fruit));
-    lis.add(Food('apple', state.yellow, Type.fruit));
-    lis.add(Food('apple', state.yellow, Type.fruit));
-    lis.add(Food('apple', state.yellow, Type.fruit));
-    lis.add(Food('apple', state.yellow, Type.fruit));
-    lis.add(Food('apple', state.yellow, Type.fruit));
-    lis.add(Food('apple', state.yellow, Type.fruit));
-    lis.add(Food('apple', state.yellow, Type.fruit));
-    lis.add(Food('apple', state.yellow, Type.fruit));
-    lis.add(Food('apple', state.yellow, Type.fruit));
-    lis.add(Food('apple', state.yellow, Type.fruit));
-    lis.add(Food('apple', state.yellow, Type.fruit));
-    lis.add(Food('apple', state.yellow, Type.fruit));
+    lis.add(Food('Berry', state.red, Type.Dairy));
+    lis.add(Food('Fish', state.green, Type.Seafood));
+    lis.add(Food('Apple', state.yellow, Type.Fruit));
+    lis.add(Food('Apple', state.yellow, Type.Fruit));
+    lis.add(Food('Apple', state.yellow, Type.Fruit));
+    lis.add(Food('Apple', state.yellow, Type.Fruit));
+    lis.add(Food('Apple', state.yellow, Type.Fruit));
+    lis.add(Food('Apple', state.yellow, Type.Fruit));
+    lis.add(Food('Apple', state.yellow, Type.Fruit));
+    lis.add(Food('Apple', state.yellow, Type.Fruit));
+    lis.add(Food('Apple', state.yellow, Type.Fruit));
+    lis.add(Food('Apple', state.yellow, Type.Fruit));
+    lis.add(Food('Apple', state.yellow, Type.Fruit));
+    lis.add(Food('Apple', state.yellow, Type.Fruit));
+    lis.add(Food('Apple', state.yellow, Type.Fruit));
     file.writeAsStringSync('');
 
     for (Food ele in lis) {
