@@ -20,6 +20,8 @@ class Food {
     id += 1;
   }
 
+  Food.edit(this._name, this._foodstate, this._foodtype, this._myid);
+
   String get getName => _name;
   Type get getType => _foodtype;
   state get getState => _foodstate;
