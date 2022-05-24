@@ -35,9 +35,9 @@ class _FoodListState extends State<FoodList> {
       leading: color,
       title: Text(f.getName), //, color]),
       subtitle: Text(EnumToString.convertToString(f.getType)),
-      trailing: const IconButton(
-        icon: Icon(Icons.settings),
-        onPressed: null,
+      trailing: IconButton(
+        icon: const Icon(Icons.settings),
+        onPressed: () => print('my id is ' + f.getID.toString()),
       ),
     );
   }

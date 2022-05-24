@@ -2,21 +2,27 @@
 
 enum Type {
   All,
-  dairy,
-  seafood,
-  fruit,
+  Dairy,
+  Seafood,
+  Fruit,
 }
 enum state { red, green, yellow }
 
 class Food {
+  static int id = 0;
   final String _name;
   final Type _foodtype;
   final state _foodstate;
-
-  Food(this._name, this._foodstate, this._foodtype);
+  late final int _myid;
+  Food(this._name, this._foodstate, this._foodtype) {
+    _myid = id;
+    print(id.toString() + ' my id is ' + _myid.toString());
+    id += 1;
+  }
 
   String get getName => _name;
   Type get getType => _foodtype;
   state get getState => _foodstate;
   String get StringVar => '$_name,$_foodstate,$_foodtype';
+  int get getID => _myid;
 }
