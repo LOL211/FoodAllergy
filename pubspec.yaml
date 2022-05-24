@@ -36,7 +36,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   path_provider: ^2.0.10
   enum_to_string: ^2.0.1
-  dropdownfield: ^1.0.3
 
 dev_dependencies:
   flutter_test:
