@@ -65,10 +65,11 @@ class FileSetup {
     List<Food> foodlist = [];
     for (String element in lis) {
       List<String> spl = element.split(',');
-      foodlist.add(Food(
+      foodlist.add(Food.edit(
           spl[0],
           state.values.firstWhere((e) => e.toString() == spl[1]),
-          Type.values.firstWhere((e) => e.toString() == spl[2])));
+          Type.values.firstWhere((e) => e.toString() == spl[2]),
+          int.parse(spl[3])));
     }
 
     if (namefil != '') {
@@ -96,5 +97,10 @@ class FileSetup {
   static void writeToFileSingle(Food lis) async {
     final file = await _localFile;
     file.writeAsStringSync(lis.StringVar + '\n', mode: FileMode.append);
+  }
+
+  static void clear() async {
+    final file = await _localFile;
+    file.writeAsStringSync('');
   }
 }
