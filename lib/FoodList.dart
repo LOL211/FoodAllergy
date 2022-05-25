@@ -1,21 +1,23 @@
-// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: curly_braces_in_flow_control_structures, avoid_unnecessary_containers
 
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 
 import 'FileSetup.dart';
+import 'addedit.dart';
 import 'food.dart';
 
 class FoodList extends StatefulWidget {
   final List<Food>? li;
-  const FoodList(this.li, {Key? key}) : super(key: key);
+  final Function refresh;
+  const FoodList(this.refresh, this.li, {Key? key}) : super(key: key);
 
   @override
   State<FoodList> createState() => _FoodListState();
 }
 
 class _FoodListState extends State<FoodList> {
-  Widget _buildrow(Food f) {
+  Widget _buildrow(Food f, BuildContext context) {
     Color r;
     switch (f.getState) {
       case state.green:
@@ -36,7 +38,7 @@ class _FoodListState extends State<FoodList> {
       leading: color,
       title: Text(f.getName), //, color]),
       subtitle: Text(EnumToString.convertToString(f.getType)),
-      trailing: Expanded(
+      trailing: Container(
           child: Row(mainAxisSize: MainAxisSize.min, children: [
         IconButton(
             icon: const Icon(Icons.restore_from_trash),
@@ -45,7 +47,13 @@ class _FoodListState extends State<FoodList> {
                   temp.removeWhere((element) => element.getID == f.getID);
                   FileSetup.writeToFile(temp);
                 })),
-        const IconButton(onPressed: null, icon: Icon(Icons.settings))
+        IconButton(
+            onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddEdit(f)))
+                .then((value) => setState(() {
+                      widget.refresh();
+                    })),
+            icon: const Icon(Icons.settings))
       ])),
     );
   }
@@ -59,7 +67,7 @@ class _FoodListState extends State<FoodList> {
         padding: const EdgeInsets.all(8),
         itemCount: widget.li!.length,
         itemBuilder: (BuildContext context, int index) {
-          return _buildrow(widget.li![index]);
+          return _buildrow(widget.li![index], context);
         });
   }
 }
