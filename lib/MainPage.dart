@@ -41,6 +41,11 @@ class _MainPageState extends State<MainPage> {
 
   Color dropDownIcon = Colors.white;
   Type dropDownType = Type.All;
+
+  void refreshstate() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     //FileSetup.writeDefault();
@@ -104,7 +109,7 @@ class _MainPageState extends State<MainPage> {
               future: FileSetup.readFile(),
               builder: (context, AsyncSnapshot<List<Food>> curState) {
                 if (curState.hasData)
-                  return FoodList(curState.data);
+                  return FoodList(refreshstate, curState.data);
                 else
                   return const CircularProgressIndicator();
               }))
