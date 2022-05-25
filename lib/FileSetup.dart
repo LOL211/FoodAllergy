@@ -92,4 +92,9 @@ class FileSetup {
       file.writeAsStringSync(ele.StringVar + '\n', mode: FileMode.append);
     }
   }
+
+  static void writeToFileSingle(Food lis) async {
+    final file = await _localFile;
+    file.writeAsStringSync(lis.StringVar + '\n', mode: FileMode.append);
+  }
 }

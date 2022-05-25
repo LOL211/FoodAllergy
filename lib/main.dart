@@ -1,4 +1,6 @@
+import 'package:eatingblock/FileSetup.dart';
 import 'package:eatingblock/addedit.dart';
+import 'package:eatingblock/food.dart';
 import 'package:flutter/material.dart';
 
 import 'MainPage.dart';
@@ -33,13 +35,8 @@ class Alternate extends StatelessWidget {
           title: const Text('Hi'),
           actions: [
             IconButton(
-                onPressed: () => {
-                      //print('ok')
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AddEdit(null)))
-                    },
+                onPressed: () => FileSetup.writeToFileSingle(
+                    Food('Cherry', state.green, Type.Fruit)),
                 icon: const Icon(
                   Icons.add,
                   color: Colors.white,
