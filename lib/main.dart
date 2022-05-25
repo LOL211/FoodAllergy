@@ -1,6 +1,4 @@
-import 'package:eatingblock/FileSetup.dart';
 import 'package:eatingblock/addedit.dart';
-import 'package:eatingblock/food.dart';
 import 'package:flutter/material.dart';
 
 import 'MainPage.dart';
@@ -12,22 +10,28 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    //FileSetup.clear();
+
     return MaterialApp(
         title: 'Flutter Dem',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const Alternate());
+        home: const MainScreenBody());
   }
 }
 
-class Alternate extends StatelessWidget {
-  const Alternate({Key? key}) : super(key: key);
+class MainScreenBody extends StatefulWidget {
+  const MainScreenBody({Key? key}) : super(key: key);
 
+  @override
+  State<MainScreenBody> createState() => _MainScreenBodyState();
+}
+
+class _MainScreenBodyState extends State<MainScreenBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +39,11 @@ class Alternate extends StatelessWidget {
           title: const Text('Hi'),
           actions: [
             IconButton(
-                onPressed: () => FileSetup.writeToFileSingle(
-                    Food('Cherry', state.green, Type.Fruit)),
+                onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AddEdit(null)))
+                    .then((value) => setState(() {})),
                 icon: const Icon(
                   Icons.add,
                   color: Colors.white,
