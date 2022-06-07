@@ -1,6 +1,5 @@
 import 'package:eatingblock/addedit.dart';
 import 'package:flutter/material.dart';
-
 import 'MainPage.dart';
 
 void main() {
@@ -36,9 +35,9 @@ class _MainScreenBodyState extends State<MainScreenBody> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Hi'),
+          title: const Text('Food Allergies'),
           actions: [
-            IconButton(
+            IconButton( 
                 onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -47,9 +46,39 @@ class _MainScreenBodyState extends State<MainScreenBody> {
                 icon: const Icon(
                   Icons.add,
                   color: Colors.white,
-                ))
+                )),
+              // IconButton(
+              //     onPressed: () => setState(() {
+              //           CustomText.increasesize();
+              //         }),
+              //     icon: Icon(Icons.visibility)),
+              // IconButton(
+              //     onPressed: () => setState(() {
+              //           CustomText.decreasesize();
+              //         }),
+              //     icon: Icon(Icons.visibility_off))
           ],
         ),
-        body: const MainPage());
+        // ignore: prefer_const_constructors
+        body: MainPage());
   }
 }
+
+// class CustomText extends StatelessWidget {
+//   final String _text;
+//   CustomText(this._text, {Key? key}) : super(key: key);
+//   static double _size = 10;
+//   static void increasesize() {
+//     _size += 10;
+//     print(_size);
+//   }
+
+//   static void decreasesize() {
+//     _size -= 1;
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Text(_text, style: TextStyle(fontSize: _size));
+//   }
+// }

@@ -2,6 +2,8 @@
 
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+
 enum Type {
   All,
   Dairy,
@@ -32,4 +34,22 @@ class Food {
   state get getState => _foodstate;
   String get StringVar => '$_name,$_foodstate,$_foodtype,$getID';
   int get getID => _myid;
+}
+
+class CustomText extends StatelessWidget {
+  final String _text;
+  CustomText(this._text, {Key? key}) : super(key: key);
+  static double _size = 1;
+  static void increasesize() {
+    _size += 0.1;
+  }
+
+  static void decreasesize() {
+    _size -= 0.1;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(_text, textScaleFactor: _size);
+  }
 }
